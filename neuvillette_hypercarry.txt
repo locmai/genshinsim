@@ -1,0 +1,1 @@
+# placeholder until https://github.com/genshinsim/gcsim/pull/1727 merged

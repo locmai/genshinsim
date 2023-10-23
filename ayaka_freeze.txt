@@ -1,0 +1,62 @@
+# basic Ayaka luxury freeze team
+ayaka char lvl=90/90 cons=2 talent=10,10,10;
+ayaka add weapon="mistsplitterreforged" refine=1 lvl=90/90;
+ayaka add set="blizzardstrayer" count=4;
+ayaka add set="goldentroupe" count=1;
+ayaka add stats def%=0.057999999999999996 def=19 hp=4780 hp%=0.087 atk=374 atk%=0.764 er=0.317 em=42 cr=0.401 cd=1.275 cryo%=0.466;
+
+shenhe char lvl=90/90 cons=1 talent=1,8,8;
+shenhe add weapon="calamityqueller" refine=1 lvl=90/90;
+shenhe add set="gildeddreams" count=1;
+shenhe add set="noblesseoblige" count=4;
+shenhe add stats hp=5348 hp%=0.152 atk=390 atk%=1.2870000000000001 er=0.998 em=198 cr=0.128 cd=0.132;
+
+kazuha char lvl=90/90 cons=2 talent=3,8,8;
+kazuha add weapon="freedomsworn" refine=1 lvl=90/90;
+kazuha add set="viridescentvenerer" count=4;
+kazuha add set="blizzardstrayer" count=1;
+kazuha add stats def%=0.314 def=42 hp=5049 hp%=0.32 atk=428 atk%=0.146 er=0.376 em=692.5 cd=0.265;
+
+kokomi char lvl=90/90 cons=0 talent=1,8,6;
+kokomi add weapon="thrillingtalesofdragonslayers" refine=5 lvl=90/90;
+kokomi add set="tenacityofthemillelith" count=4;
+kokomi add set="wandererstroupe" count=1;
+kokomi add stats def=157 hp=6423 hp%=1.2060000000000002 atk=346 atk%=0.16299999999999998 er=0.5439999999999999 em=58 cr=0.136;
+
+# enemy config
+# high cryo/anemo resist ()
+target lvl=100 resist=0.1 anemo=0.8 cryo=0.8 hp=2079751 radius=1 pos=2,2;
+energy every interval=480,720 amount=100;
+
+# sim config
+# swap delay of 12 corresponds to roughly 100ms ping in game.
+options swap_delay=12 debug=true iteration=10 workers=1 mode=sl;
+
+active ayaka;
+
+for let r = 0; r < 3; r = r + 1 {
+  ayaka dash, attack;
+  if .ayaka.energy < 80 {
+    shenhe skill, attack;
+    ayaka attack, skill;
+  }
+
+  kazuha skill[hold=1], high_plunge, burst;
+  
+  if .shenhe.skill.charge == 2 {
+    shenhe skill;
+  }
+
+  shenhe burst;
+
+  if .kokomi.skill.ready == 1 {
+    kokomi skill;
+  }
+  else {
+    kokomi burst;
+  }
+  ayaka dash, attack, skill, burst, attack:2, charge;
+  kazuha skill, high_plunge; 
+  shenhe skill[hold=1];
+  ayaka dash, attack:3, charge;
+}
