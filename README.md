@@ -13,3 +13,10 @@ Note for a quick test:
 ```
 .\gcsim.exe -c .\ayaka_freeze.txt -s
 ```
+
+.
+.
+.
+.
+.
+but why ...? cuz I'm bored.
